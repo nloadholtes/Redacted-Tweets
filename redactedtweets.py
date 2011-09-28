@@ -6,4 +6,32 @@
 #
 
 REDACTED_CHAR = u'\u2588'
+ACTION_WORDS = ('to', 'with', )
+
+TEST_TWEET = "I went to  work with gusto."
+
+PEOPLE_TO_WATCH = ('first', 'second')
+
+def getTweets():
+    pass
+
+def scanTweets(tweets):
+    output = []
+    for tweet in tweets:
+        tmp = redactTweet(tweet)
+        if tmp:
+            output.append(tmp)
+    return output
+
+def redactTweet(tweet):
+    words = tweet.split(' ')
+    output = None
+    for word in words:
+        if word in ACTION_WORDS:
+            output += "X" #length of word, substitute redacted_char
+        else:
+            output += word + " "
+    if output == words:
+        return None
+    return output
 
