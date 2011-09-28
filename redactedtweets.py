@@ -35,3 +35,8 @@ def redactTweet(tweet):
         return None
     return output
 
+def test():
+    pass
+
+if __name__ == "__main__":
+    test()
