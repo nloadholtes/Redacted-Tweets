@@ -8,7 +8,7 @@
 REDACTED_CHAR = u'\u2588'
 ACTION_WORDS = ('to', 'with', )
 
-TEST_TWEET = "I went to  work with gusto."
+TEST_TWEET = "I went to work with gusto."
 
 PEOPLE_TO_WATCH = ('first', 'second')
 
@@ -29,7 +29,7 @@ def redactTweet(tweet):
     output = ""
     for word in words:
         if word in ACTION_WORDS:
-            output += "X" #length of word, substitute redacted_char
+            output += "X"  + " " #length of word, substitute redacted_char
         else:
             output += word + " "
     if output == words:
