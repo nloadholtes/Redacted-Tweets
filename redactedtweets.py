@@ -18,7 +18,6 @@ def getTweets():
 def scanTweets(tweets):
     output = []
     for tweet in tweets:
-        print "->" + tweet
         tmp = redactTweet(tweet)
         if tmp:
             output.append(tmp)
@@ -44,7 +43,10 @@ def redactTweet(tweet):
     return output
 
 def test():
-    print scanTweets([TEST_TWEET])
+    result = scanTweets([TEST_TWEET])
+    print "->" + TEST_TWEET
+    print "".join(result)
+    assert(result != TEST_TWEET)
 
 if __name__ == "__main__":
     test()
