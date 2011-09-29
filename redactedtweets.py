@@ -29,7 +29,8 @@ def redactTweet(tweet):
     output = ""
     for word in words:
         if word in ACTION_WORDS:
-            output += "X"  + " " #length of word, substitute redacted_char
+            tmp = [REDACTED_CHAR for x in word]
+            output += "".join(tmp)  + " " #length of word, substitute redacted_char
         else:
             output += word + " "
     if output == words:
