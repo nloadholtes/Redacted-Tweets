@@ -27,12 +27,18 @@ def scanTweets(tweets):
 def redactTweet(tweet):
     words = tweet.split(' ')
     output = ""
+    redact = None
     for word in words:
         if word in ACTION_WORDS:
+            redact = word
+        if redact and redact != word:
             tmp = [REDACTED_CHAR for x in word]
-            output += "".join(tmp)  + " " #length of word, substitute redacted_char
+            output += "".join(tmp) #length of word, substitute redacted_char
+            redact = None
         else:
-            output += word + " "
+            output += word
+        output += " "
+
     if output == words:
         return None
     return output
