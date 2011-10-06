@@ -18,7 +18,8 @@ POSTURL = "http://api.twitter.com/1/statuses/update.json"
 def getTweets():
     pass
 
-def postTweet():
+def postTweet(tweettext):
+    status = "status="+tweettext
     pass
 
 def scanTweets(tweets):
