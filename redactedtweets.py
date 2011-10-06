@@ -12,7 +12,13 @@ TEST_TWEET = "I went to work with gusto."
 
 PEOPLE_TO_WATCH = ('first', 'second')
 
+TIMELINE = "http://api.twitter.com/1/statuses/home_timeline.json"
+POSTURL = "http://api.twitter.com/1/statuses/update.json"
+
 def getTweets():
+    pass
+
+def postTweet():
     pass
 
 def scanTweets(tweets):
