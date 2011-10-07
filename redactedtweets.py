@@ -63,6 +63,11 @@ def main():
     config = ConfigParser.RawConfigParser()
     config.read('config.cfg')
     api = twitter.Api()
+    api.SetCredentials(config.get('twitter', 'CONSUMER_KEY'),
+                      config.get('twitter', 'CONSUMER_SECRET'))
+    statuses = api.GetPublicTimeline()
+    print [s.user.name for s in statuses]
 
 if __name__ == "__main__":
-    test()
+    #test()
+    main()
