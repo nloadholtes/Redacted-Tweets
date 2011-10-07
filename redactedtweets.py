@@ -5,15 +5,19 @@
 # Sept 26, 2011
 #
 
+import twitter
+import ConfigParser
+
 REDACTED_CHAR = u'\u2588'
 ACTION_WORDS = ('to', 'with', )
 
 TEST_TWEET = "I went to work with gusto."
 
-PEOPLE_TO_WATCH = ('first', 'second')
-
 TIMELINE = "http://api.twitter.com/1/statuses/home_timeline.json"
 POSTURL = "http://api.twitter.com/1/statuses/update.json"
+
+api = None
+config = None
 
 def getTweets():
     pass
@@ -54,6 +58,11 @@ def test():
     print "->" + TEST_TWEET
     print "".join(result)
     assert(result != TEST_TWEET)
+    
+def main():
+    config = ConfigParser.RawConfigParser()
+    config.read('config.cfg')
+    api = twitter.Api()
 
 if __name__ == "__main__":
     test()
