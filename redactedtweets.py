@@ -5,7 +5,7 @@
 # Sept 26, 2011
 #
 
-import twitter
+import tweepy
 import ConfigParser
 
 REDACTED_CHAR = u'\u2588'
@@ -62,11 +62,13 @@ def test():
 def main():
     config = ConfigParser.RawConfigParser()
     config.read('config.cfg')
-    api = twitter.Api()
-    api.SetCredentials(config.get('twitter', 'CONSUMER_KEY'),
+    auth = tweepy.OAuthHandler(config.get('twitter', 'CONSUMER_KEY'),
                       config.get('twitter', 'CONSUMER_SECRET'))
-    statuses = api.GetPublicTimeline()
-    print [s.user.name for s in statuses]
+    auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
+                      config.get('twitter', 'ACCESS_TOKEN_SECRET'))
+    api = tweepy.API(auth)
+    print api.me()
+    print api.public_timeline()
 
 if __name__ == "__main__":
     #test()
