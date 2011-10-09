@@ -9,7 +9,7 @@ import tweepy
 import ConfigParser
 
 REDACTED_CHAR = u'\u2588'
-ACTION_WORDS = ('to', 'with', )
+ACTION_WORDS = ('to', 'with',)
 
 TEST_TWEET = "I went to work with gusto."
 
@@ -30,13 +30,15 @@ def scanTweets(tweets):
     output = []
     for tweet in tweets:
         tmp = redactTweet(tweet[2])
-        if tmp != tweet[2]:
+        if tmp is not None:
+            print "WAS: ", tweet[2]
+            print "NOW: ", tmp
             output.append((tweet[1] ,tmp))
     return output
 
 def redactTweet(tweet):
     words = tweet.split(' ')
-    output = ""
+    output = unicode("", errors='ignore')
     redact = None
     for word in words:
         if word in ACTION_WORDS:
@@ -48,8 +50,8 @@ def redactTweet(tweet):
         else:
             output += word
         output += " "
-
-    if output == words:
+    output = output.strip()
+    if output == tweet.strip():
         return None
     return output
 
@@ -69,8 +71,7 @@ def main():
     api = tweepy.API(auth)
 #    print api.me().name
     tweets = getTweets(api)
-    for x in scanTweets(tweets):
-        print x
+    scanTweets(tweets)
 
 if __name__ == "__main__":
     #test()
