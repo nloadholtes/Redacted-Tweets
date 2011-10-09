@@ -20,7 +20,7 @@ api = None
 config = None
 
 def getTweets(api):
-    print  [(x.user.name, '@' +str(x.user.screen_name), x.text) for x in api.home_timeline()]
+    return  [(x.user.name, '@' +str(x.user.screen_name), x.text) for x in api.home_timeline()]
 
 def postTweet(tweettext):
     status = "status="+tweettext
@@ -29,9 +29,9 @@ def postTweet(tweettext):
 def scanTweets(tweets):
     output = []
     for tweet in tweets:
-        tmp = redactTweet(tweet)
-        if tmp:
-            output.append(tmp)
+        tmp = redactTweet(tweet[2])
+        if tmp != tweet[2]:
+            output.append((tweet[1] ,tmp))
     return output
 
 def redactTweet(tweet):
@@ -67,9 +67,10 @@ def main():
     auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
     api = tweepy.API(auth)
-    print api.me().name
-    #print [x.user.name for x in api.public_timeline()]
-    getTweets(api)
+#    print api.me().name
+    tweets = getTweets(api)
+    for x in scanTweets(tweets):
+        print x
 
 if __name__ == "__main__":
     #test()
