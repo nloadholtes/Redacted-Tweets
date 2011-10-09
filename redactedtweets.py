@@ -67,8 +67,8 @@ def main():
     auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
     api = tweepy.API(auth)
-    print api.me()
-    print api.public_timeline()
+    print api.me().name
+    print [x.user.name for x in api.public_timeline()]
 
 if __name__ == "__main__":
     #test()
