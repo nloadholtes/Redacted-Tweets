@@ -19,8 +19,8 @@ POSTURL = "http://api.twitter.com/1/statuses/update.json"
 api = None
 config = None
 
-def getTweets():
-    pass
+def getTweets(api):
+    print  [(x.user.name, '@' +str(x.user.screen_name), x.text) for x in api.home_timeline()]
 
 def postTweet(tweettext):
     status = "status="+tweettext
@@ -68,7 +68,8 @@ def main():
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
     api = tweepy.API(auth)
     print api.me().name
-    print [x.user.name for x in api.public_timeline()]
+    #print [x.user.name for x in api.public_timeline()]
+    getTweets(api)
 
 if __name__ == "__main__":
     #test()
