@@ -22,8 +22,7 @@ config = None
 def getTweets(api):
     return  [(x.user.name, '@' +str(x.user.screen_name), x.text) for x in api.home_timeline()]
 
-def postTweet(tweettext):
-    status = "status="+tweettext
+def postTweet(api, tweettext):
     pass
 
 def scanTweets(tweets):
@@ -31,8 +30,8 @@ def scanTweets(tweets):
     for tweet in tweets:
         tmp = redactTweet(tweet[2])
         if tmp is not None:
-            print "WAS: ", tweet[2]
-            print "NOW: ", tmp
+            #print "WAS: ", tweet[2]
+            #print "NOW: ", tmp
             output.append((tweet[1] ,tmp))
     return output
 
@@ -71,7 +70,10 @@ def main():
     api = tweepy.API(auth)
 #    print api.me().name
     tweets = getTweets(api)
-    scanTweets(tweets)
+    for x in scanTweets(tweets):
+        txt = "RT " + x[0] + ": " + x[1]
+        print txt[:140]
+        api.update_status(txt[:140])
 
 if __name__ == "__main__":
     #test()
