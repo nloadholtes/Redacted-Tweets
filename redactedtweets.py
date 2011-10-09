@@ -9,7 +9,7 @@ import tweepy
 import ConfigParser
 
 REDACTED_CHAR = u'\u2588'
-ACTION_WORDS = ('to', 'with',)
+ACTION_WORDS = ('to', 'with', 'in', 'the',)
 
 TEST_TWEET = "I went to work with gusto."
 
