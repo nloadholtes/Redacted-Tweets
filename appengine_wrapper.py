@@ -1,0 +1,3 @@
+from redactedtweets import *
+
+main()
