@@ -13,9 +13,6 @@ ACTION_WORDS = ('to', 'with', 'in', 'the',)
 
 TEST_TWEET = "I went to work with gusto."
 
-TIMELINE = "http://api.twitter.com/1/statuses/home_timeline.json"
-POSTURL = "http://api.twitter.com/1/statuses/update.json"
-
 api = None
 config = None
 
