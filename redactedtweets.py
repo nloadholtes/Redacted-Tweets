@@ -27,8 +27,6 @@ def scanTweets(tweets):
     for tweet in tweets:
         tmp = redactTweet(tweet[2])
         if tmp is not None:
-            #print "WAS: ", tweet[2]
-            #print "NOW: ", tmp
             output.append((tweet[1] ,tmp))
     return output
 
@@ -57,19 +55,17 @@ def test():
     print "".join(result)
     assert(result != TEST_TWEET)
     
-def main():
+def main(configfilename='config.cfg'):
     config = ConfigParser.RawConfigParser()
-    config.read('config.cfg')
+    config.read(configfilename)
     auth = tweepy.OAuthHandler(config.get('twitter', 'CONSUMER_KEY'),
                       config.get('twitter', 'CONSUMER_SECRET'))
     auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
     api = tweepy.API(auth)
-#    print api.me().name
     tweets = getTweets(api)
     for x in scanTweets(tweets):
         txt = "RT " + x[0] + ": " + x[1]
-        print txt[:140]
         api.update_status(txt[:140])
 
 if __name__ == "__main__":
