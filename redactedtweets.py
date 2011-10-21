@@ -56,12 +56,19 @@ def test():
     assert(result != TEST_TWEET)
     
 def main(configfilename='config.cfg'):
+    global REDACTED_CHAR, ACTION_WORDS
     config = ConfigParser.RawConfigParser()
     config.read(configfilename)
     auth = tweepy.OAuthHandler(config.get('twitter', 'CONSUMER_KEY'),
                       config.get('twitter', 'CONSUMER_SECRET'))
     auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
+    actionwords = config.get('twitter', 'ACTION_WORDS')
+    redactedchar = config.get('twitter', 'REDACTED_CHAR')
+    if actionwords:
+        ACTION_WORDS = actionwords
+    if redactedchar:
+        REDACTED_CHAR = redactedchar
     api = tweepy.API(auth)
     tweets = getTweets(api)
     for x in scanTweets(tweets):
