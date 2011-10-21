@@ -8,4 +8,7 @@ handlers:
   script: helloworld.py
 
 - url: /tasks/redactify
-  script: appengine_wrapper.py
+  script: redacted_wrapper.py
+
+#- url: /tasks/libify
+#  script: madlib_wrapper.py
