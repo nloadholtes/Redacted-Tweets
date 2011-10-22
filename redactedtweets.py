@@ -76,5 +76,4 @@ def main(configfilename='config.cfg'):
         api.update_status(txt[:140])
 
 if __name__ == "__main__":
-    #test()
     main()
