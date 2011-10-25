@@ -25,8 +25,8 @@ def postTweet(api, tweettext):
 def scanTweets(tweets):
     output = []
     for tweet in tweets:
-        tmp = redactTweet(tweet[2])
-        if tmp is not None:
+        tmp, count = redactTweet(tweet[2])
+        if tmp is not None and count > 1:
             output.append((tweet[1] ,tmp))
     return output
 
@@ -34,6 +34,7 @@ def redactTweet(tweet):
     words = tweet.split(' ')
     output = unicode("", errors='ignore')
     redact = None
+    count = 0
     for word in words:
         if word in ACTION_WORDS:
             redact = word
@@ -41,13 +42,14 @@ def redactTweet(tweet):
             tmp = [REDACTED_CHAR for x in word] #length of word, substitute redacted_char
             output += "".join(tmp) 
             redact = None
+            count += 1
         else:
             output += word
         output += " "
     output = output.strip()
     if output == tweet.strip():
-        return None
-    return output
+        return None, count
+    return output, count
 
 def test():
     result = scanTweets([TEST_TWEET])
