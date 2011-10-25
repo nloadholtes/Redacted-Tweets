@@ -68,7 +68,7 @@ def main(configfilename='config.cfg'):
     if actionwords:
         ACTION_WORDS = actionwords
     if redactedchar:
-        REDACTED_CHAR = redactedchar
+        REDACTED_CHAR = unicode(redactedchar, errors='ignore')
     api = tweepy.API(auth)
     tweets = getTweets(api)
     for x in scanTweets(tweets):
@@ -76,4 +76,5 @@ def main(configfilename='config.cfg'):
         api.update_status(txt[:140])
 
 if __name__ == "__main__":
+    #test()
     main()
