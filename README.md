@@ -10,7 +10,7 @@ http://twitter.com/#!/redactedtweet
 And with a slight refactoring, the code now supports the creation of Mad Libs! You know, it's like
 when you ______ to the ______ and see ______ going _____ over some new ______!
 
-Check out the MadTweetLibs:
+Check out the MadTweetLibs twitter page:
 
 http://twitter.com/#!/MadTweetLib
 
