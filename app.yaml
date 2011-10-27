@@ -10,5 +10,5 @@ handlers:
 - url: /tasks/redactify
   script: redacted_wrapper.py
 
-#- url: /tasks/libify
-#  script: madlib_wrapper.py
+- url: /tasks/libify
+  script: madlib_wrapper.py

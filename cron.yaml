@@ -2,3 +2,7 @@ cron:
 - description: daily summary job
   url: /tasks/redactify
   schedule: every 24 hours
+
+- description: every 10 hours
+  url: /tasks/libify
+  schedule: every 18 hours
