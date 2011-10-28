@@ -70,7 +70,7 @@ def main(configfilename='config.cfg'):
     if actionwords:
         ACTION_WORDS = actionwords
     if redactedchar:
-        REDACTED_CHAR = unicode(redactedchar, errors='ignore')
+        REDACTED_CHAR = redactedchar.encode('utf-8')
     api = tweepy.API(auth)
     tweets = getTweets(api)
     for x in scanTweets(tweets):
