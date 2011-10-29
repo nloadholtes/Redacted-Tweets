@@ -1,3 +1,3 @@
 from redactedtweets import *
 
-main()
+main('config.cfg')
