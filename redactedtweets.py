@@ -22,26 +22,27 @@ def getTweets(api):
 def postTweet(api, tweettext):
     pass
 
-def scanTweets(tweets):
+def scanTweets(tweets, action_words, redacted_char):
     output = []
     for tweet in tweets:
-        tmp, count = redactTweet(tweet[2])
+        tmp, count = redactTweet(tweet[2], action_words, redacted_char)
         if tmp is not None and count > 1:
             output.append((tweet[1] ,tmp))
     return output
 
-def redactTweet(tweet):
+def redactTweet(tweet, action_words, redacted_char):
     words = tweet.split(' ')
     output = unicode("", errors='ignore')
     redact = None
     count = 0
     for word in words:
-        if word in ACTION_WORDS:
+        if word in action_words:
             redact = word
         if redact and redact != word:
-            tmp = [REDACTED_CHAR for x in word] #length of word, substitute redacted_char
-            output += "".join(tmp) 
+            tmp = [redacted_char for x in word] #length of word, substitute redacted_char
+            output += "".join(tmp)
             redact = None
+
             count += 1
         else:
             output += word
@@ -56,9 +57,8 @@ def test():
     print "->" + TEST_TWEET
     print "".join(result)
     assert(result != TEST_TWEET)
-    
+
 def main(configfilename='config.cfg'):
-    global REDACTED_CHAR, ACTION_WORDS
     config = ConfigParser.RawConfigParser()
     config.read(configfilename)
     auth = tweepy.OAuthHandler(config.get('twitter', 'CONSUMER_KEY'),
@@ -67,13 +67,13 @@ def main(configfilename='config.cfg'):
                       config.get('twitter', 'ACCESS_TOKEN_SECRET'))
     actionwords = config.get('twitter', 'ACTION_WORDS')
     redactedchar = config.get('twitter', 'REDACTED_CHAR')
-    if actionwords:
-        ACTION_WORDS = actionwords
-    if redactedchar:
-        REDACTED_CHAR = redactedchar
+    if actionwords is None:
+        actionwords = ACTION_WORDS
+    if redactedchar is None:
+        redactedchar = REDACTED_CHAR
     api = tweepy.API(auth)
     tweets = getTweets(api)
-    for x in scanTweets(tweets):
+    for x in scanTweets(tweets, actionwords, redactedchar):
         txt = "RT " + x[0] + ": " + x[1]
         api.update_status(txt[:140])
 
