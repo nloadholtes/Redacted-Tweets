@@ -7,6 +7,7 @@
 
 import tweepy
 import ConfigParser
+import codecs
 
 REDACTED_CHAR = u'\u2588'
 ACTION_WORDS = ('to', 'with', 'in', 'the',)
@@ -38,11 +39,10 @@ def redactTweet(tweet, action_words, redacted_char):
     for word in words:
         if word in action_words:
             redact = word
-        if redact and redact != word:
+        if redact and redact != word and len(word) > 1:
             tmp = [redacted_char for x in word] #length of word, substitute redacted_char
-            output += "".join(tmp)
+            output += u''.join(tmp)
             redact = None
-
             count += 1
         else:
             output += word
@@ -60,7 +60,7 @@ def test():
 
 def main(configfilename='config.cfg'):
     config = ConfigParser.RawConfigParser()
-    config.read(configfilename)
+    config.readfp(codecs.open(configfilename, "r", "utf8"))
     auth = tweepy.OAuthHandler(config.get('twitter', 'CONSUMER_KEY'),
                       config.get('twitter', 'CONSUMER_SECRET'))
     auth.set_access_token(config.get('twitter', 'ACCESS_TOKEN_KEY'),
