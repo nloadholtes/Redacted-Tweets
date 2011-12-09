@@ -26,6 +26,8 @@ def postTweet(api, tweettext):
 def scanTweets(tweets, action_words, redacted_char):
     output = []
     for tweet in tweets:
+        if tweet[2].find('RT @') == -1:
+            continue
         tmp, count = redactTweet(tweet[2], action_words, redacted_char)
         if tmp is not None and count > 1:
             output.append((tweet[1] ,tmp))
