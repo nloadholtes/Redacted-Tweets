@@ -18,7 +18,7 @@ api = None
 config = None
 
 def getTweets(api):
-    return  [(x.user.name, '@' +str(x.user.screen_name), x.text) for x in api.home_timeline()]
+    return  [(x.user.name, '@' +str(x.user.screen_name), x.text, x.id) for x in api.home_timeline()]
 
 def postTweet(api, tweettext):
     pass
@@ -30,7 +30,7 @@ def scanTweets(tweets, action_words, redacted_char):
             continue
         tmp, count = redactTweet(tweet[2], action_words, redacted_char)
         if tmp is not None and count > 1:
-            output.append((tweet[1] ,tmp))
+            output.append((tweet[1] ,tmp, tweet[2]))
     return output
 
 def redactTweet(tweet, action_words, redacted_char):
@@ -77,7 +77,7 @@ def main(configfilename='config.cfg'):
     tweets = getTweets(api)
     for x in scanTweets(tweets, actionwords, redactedchar):
         txt = "RT " + x[0] + ": " + x[1]
-        api.update_status(txt[:140])
+        api.update_status(txt[:140], in_reply_to_status_id=x[2])
 
 if __name__ == "__main__":
     #test()
