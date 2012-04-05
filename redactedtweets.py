@@ -76,7 +76,7 @@ def main(configfilename='config.cfg'):
     api = tweepy.API(auth)
     tweets = getTweets(api)
     for x in scanTweets(tweets, actionwords, redactedchar):
-        txt = "RT " + x[0] + ": " + x[1]
+        txt = "RT " + x[0] + " " + x[1]
         api.update_status(txt[:140], in_reply_to_status_id=x[2])
 
 if __name__ == "__main__":
